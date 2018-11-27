@@ -19,9 +19,15 @@ namespace StudentExercisesWebApp.Models
         [Required]
         public string LastName { get; set; }
 
+        //if you want to change the display info you only have to do it here
         [Display(Name = "Student's Cohort")]
-        [Required(ErrorMessage ="Please select a corhort")]
+        //this will give an  error message if a cohort isn't selected
+        [Required(ErrorMessage = "Please select a corhort")]
         public int CohortId { get; set; }
+
+        public string FullName {
+            get { return FirstName + " " + LastName; }
+        }
 
         public virtual Cohort Cohort { get; set; }
         public virtual ICollection<StudentExercise> StudentExercises { get; set; }

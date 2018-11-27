@@ -10,8 +10,11 @@ namespace StudentExercisesWebApp.Models.ViewModels
     public class CreateStudentViewModel
     {
         public Student Student { get; set; }
+
         public List<SelectListItem> AvailableExercises { get; private set; }
+
         public List<int> SelectedExercises { get; set; }
+
         public List<SelectListItem> Cohorts { get; set; }
 
         public CreateStudentViewModel() { }
