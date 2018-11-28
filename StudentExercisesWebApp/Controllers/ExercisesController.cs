@@ -35,6 +35,8 @@ namespace StudentExercisesWebApp.Controllers
             }
 
             var exercise = await _context.Exercises
+                         .Include(e => e.StudentExercises)
+                         .ThenInclude(se => se.Student)
                 .FirstOrDefaultAsync(m => m.ExerciseId == id);
             if (exercise == null)
             {
@@ -63,13 +65,16 @@ namespace StudentExercisesWebApp.Controllers
                 _context.Add(model.Exercise);
 
                 //foreach student in the selectedStudents make a joiner table in StudentExercises 
-                foreach (int studentId in model.SelectedStudents)
-                {
-                    StudentExercise newSS = new StudentExercise()
+                if (model.SelectedStudents != null)
+                { 
+                    foreach (int studentId in model.SelectedStudents)
                     {
-                        StudentId = studentId,
-                        ExerciseId = model.Exercise.ExerciseId
-                    };
+                        StudentExercise newSS = new StudentExercise()
+                        {
+                            StudentId = studentId,
+                            ExerciseId = model.Exercise.ExerciseId
+                        };
+                    }
                 }
 
                 await _context.SaveChangesAsync();
